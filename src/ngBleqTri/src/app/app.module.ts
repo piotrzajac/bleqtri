@@ -4,12 +4,14 @@ import { WebBluetoothModule } from '@manekinekko/angular-web-bluetooth';
 
 import { AppComponent } from './app.component';
 import { ThermostatComponent } from './thermostat/thermostat.component';
+import { ThermostatsComponent } from './thermostats/thermostats.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ThermostatComponent
+    ThermostatComponent,
+    ThermostatsComponent
   ],
   imports: [
     BrowserModule,

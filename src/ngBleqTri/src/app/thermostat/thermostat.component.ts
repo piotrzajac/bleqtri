@@ -1,60 +1,17 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { ThermostatDiscoveryService } from '../thermostatDiscoveryService/thermostat-discovery.service';
-import { BluetoothCore } from '@manekinekko/angular-web-bluetooth';
+import { Component, OnInit, Input } from '@angular/core';
+import { Thermostat } from '../thermostat';
 
 @Component({
   selector: 'app-thermostat',
   templateUrl: './thermostat.component.html',
-  styleUrls: ['./thermostat.component.sass'],
-  providers: [ ThermostatDiscoveryService ]
+  styleUrls: ['./thermostat.component.sass']
 })
 export class ThermostatComponent implements OnInit {
+  @Input() public thermostat: Thermostat;
 
-  thermostatName = '--';
-  device: any = {};
-
-  constructor(
-    private zone: NgZone,
-    private thermostatDiscoveryService: ThermostatDiscoveryService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.getDeviceStatus();
-    this.streamValues();
   }
 
-  streamValues() {
-    this.thermostatDiscoveryService.streamValues().subscribe(this.showThermostatName.bind(this));
-  }
-
-  getDeviceStatus() {
-    this.thermostatDiscoveryService.getDevice().subscribe(
-      (device) => {
-
-        if (device) {
-          this.device = device;
-        } else {
-          // device not connected or disconnected
-          this.device = null;
-          this.thermostatName = '--';
-        }
-      }
-    );
-  }
-
-  getFakeValue() {
-    this.thermostatDiscoveryService.getFakeValue();
-  }
-
-  getThermostatName() {
-    return this.thermostatDiscoveryService.getThermostatName().subscribe(this.showThermostatName.bind(this));
-  }
-
-  showThermostatName(value: number) {
-    // force change detection
-    this.zone.run( () =>  {
-      console.log('Reading thermostat name %s', value);
-      this.thermostatName = '' + value;
-    });
-  }
 }

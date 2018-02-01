@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-2 col-sm-2">
+            <button type="button" class="btn icon-btn btn-success" (click)="addThermostat()">
+                <span class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span> Add
+            </button>
+        </div>
+        <div class="col-xs-6 col-sm-8">
+            <ul class="list-inline">
+                <li *ngFor="let thermostat of thermostats">
+                    <app-thermostat [thermostat]="thermostat"></app-thermostat>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

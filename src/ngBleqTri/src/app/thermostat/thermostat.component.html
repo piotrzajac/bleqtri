@@ -5,10 +5,16 @@
     </div> -->
     <ul class="list-group">
         <li class="list-group-item">
-            <span class="badge">{{thermostatName || 'N/A'}}</span> Manufacturer name
+            <span class="badge">{{ thermostat.id || 'N/A'}}</span> ID
+        </li>
+        <li class="list-group-item">
+            <span class="badge">{{ thermostat.isConnected || 'N/A'}}</span> Is connected?
+        </li>
+        <li class="list-group-item">
+            <span class="badge">{{ thermostat.manufacturer || 'N/A'}}</span> Manufacturer name
+        </li>
+        <li class="list-group-item">
+            <span class="badge">{{ thermostat.name || 'N/A'}}</span> Device name
         </li>
     </ul>
-    <div class="panel-footer">
-        <button (click)="getThermostatName()" class="btn btn-primary">Discover</button>
-    </div>
 </div>
