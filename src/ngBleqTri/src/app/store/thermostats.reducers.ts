@@ -20,6 +20,11 @@ export default function (state = initialState, action: ThermostatsActions.Thermo
                     ? state.thermostats.map(e => e.id === action.payload.id ? {...e, ...action.payload} : e)
                     : [...state.thermostats, action.payload]
             };
+        case ThermostatsActions.REMOVE_THERMOSTAT:
+            return {
+                ...state,
+                thermostats: state.thermostats.filter(e => e.id !== action.payload.id)
+            };
         default:
             return state;
     }

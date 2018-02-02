@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Store } from '@ngrx/store';
 
 import { Thermostat } from '../thermostat';
+import { RemoveThermostat } from '../store/thermostats.actions';
 
 @Component({
   selector: 'app-thermostat',
@@ -32,9 +34,12 @@ import { Thermostat } from '../thermostat';
 export class ThermostatComponent implements OnInit {
   @Input() public thermostat: Thermostat;
 
-  constructor() { }
+  constructor(private store: Store<{thermostats: {thermostats: Thermostat[]}}>) { }
 
   ngOnInit() {
   }
 
+  removeThermostat() {
+    this.store.dispatch(new RemoveThermostat(this.thermostat));
+  }
 }
