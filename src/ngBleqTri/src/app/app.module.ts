@@ -1,5 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebBluetoothModule } from '@manekinekko/angular-web-bluetooth';
 
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { ThermostatsComponent } from './thermostats/thermostats.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     WebBluetoothModule.forRoot({
       enableTracing: true
     })
