@@ -1,6 +1,10 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
 import { Thermostat } from '../thermostat';
 import { ThermostatDiscoveryService } from '../thermostatDiscoveryService/thermostat-discovery.service';
+import { AddThermostat } from '../store/thermostats.actions';
 
 @Component({
   selector: 'app-thermostats',
@@ -9,25 +13,19 @@ import { ThermostatDiscoveryService } from '../thermostatDiscoveryService/thermo
   providers: [ ThermostatDiscoveryService ]
 })
 export class ThermostatsComponent implements OnInit {
-  thermostats: Thermostat[] = [];
+  state: Observable<{thermostats: Thermostat[]}>;
   constructor(
-    private zone: NgZone,
-    private thermostatDiscoveryService: ThermostatDiscoveryService
+    private thermostatDiscoveryService: ThermostatDiscoveryService,
+    private store: Store<{thermostats: {thermostats: Thermostat[]}}>
   ) { }
 
   ngOnInit() {
+    this.state = this.store.select('thermostats');
   }
 
   addThermostat() {
-    this.thermostatDiscoveryService.getThermostat().subscribe(this.showThermostat.bind(this));
-  }
-
-  showThermostat(value: Thermostat) {
-    // force change detection
-    this.zone.run( () =>  {
-      if (!this.thermostats.find(t => t.id === value.id)) {
-        this.thermostats.push(value);
-      }
-    });
+    this.thermostatDiscoveryService
+      .getThermostat()
+      .subscribe(thermostat => this.store.dispatch(new AddThermostat(thermostat)));
   }
 }
