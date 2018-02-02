@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -10,7 +11,23 @@ import { AddThermostat } from '../store/thermostats.actions';
   selector: 'app-thermostats',
   templateUrl: './thermostats.component.html',
   styleUrls: ['./thermostats.component.sass'],
-  providers: [ ThermostatDiscoveryService ]
+  providers: [ ThermostatDiscoveryService ],
+  animations: [
+    trigger('visualState', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateY(-100px)'
+        }),
+        animate(300)
+      ]),
+      transition(':leave', [
+        animate(300, style({
+          opacity: 0,
+          transform: 'translateY(100px)'
+        }))
+      ])
+    ])]
 })
 export class ThermostatsComponent implements OnInit {
   state: Observable<{thermostats: Thermostat[]}>;

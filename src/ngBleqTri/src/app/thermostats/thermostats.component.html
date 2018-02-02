@@ -7,7 +7,7 @@
         </div>
         <div class="col-xs-6 col-sm-8">
             <ul class="list-inline">
-                <li *ngFor="let thermostat of (state | async).thermostats">
+                <li *ngFor="let thermostat of (state | async).thermostats" [@visualState]>
                     <app-thermostat [thermostat]="thermostat"></app-thermostat>
                 </li>
             </ul>
