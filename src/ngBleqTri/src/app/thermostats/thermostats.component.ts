@@ -4,14 +4,12 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { Thermostat } from '../thermostat';
-import { ThermostatDiscoveryService } from '../thermostatDiscoveryService/thermostat-discovery.service';
-import { AddThermostat } from '../store/thermostats.actions';
+import { DiscoverThermostat } from '../store/thermostats.actions';
 
 @Component({
   selector: 'app-thermostats',
   templateUrl: './thermostats.component.html',
   styleUrls: ['./thermostats.component.sass'],
-  providers: [ ThermostatDiscoveryService ],
   animations: [
     trigger('visualState', [
       transition(':enter', [
@@ -31,18 +29,14 @@ import { AddThermostat } from '../store/thermostats.actions';
 })
 export class ThermostatsComponent implements OnInit {
   state: Observable<{thermostats: Thermostat[]}>;
-  constructor(
-    private thermostatDiscoveryService: ThermostatDiscoveryService,
-    private store: Store<{thermostats: {thermostats: Thermostat[]}}>
-  ) { }
+
+  constructor(private store: Store<{thermostats: {thermostats: Thermostat[]}}>) { }
 
   ngOnInit() {
     this.state = this.store.select('thermostats');
   }
 
-  addThermostat() {
-    this.thermostatDiscoveryService
-      .getThermostat()
-      .subscribe(thermostat => this.store.dispatch(new AddThermostat(thermostat)));
+  discoverThermostat() {
+    this.store.dispatch(new DiscoverThermostat());
   }
 }
